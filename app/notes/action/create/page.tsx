@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "New Note Form",
   description: "Form for creating a new note",
   openGraph: {
-    url: "https://vercel.com/marynas-projects-3f5c6324/08-zustand",
+    url: `https://08-zustand-kf5mmf8bz-marynas-projects-3f5c6324.vercel.app/notes/action/create`,
     title: "New Note Form",
     description: "Form for creating a new note",
     images: [
