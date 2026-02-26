@@ -9,17 +9,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import Pagination from "@/components/Pagination/Pagination";
 import { useState } from "react";
 import SearchBox from "@/components/SearchBox/SearchBox";
-import Modal from "@/components/Modal/Modal";
-import NoteForm from "@/components/NoteForm/NoteForm";
 import { useDebouncedCallback } from "use-debounce";
 import NoteList from "@/components/NoteList/NoteList";
-// import { useParams } from "next/navigation";
-
-// interface NotesClientProps {
-//   initialPage: number;
-//   searchQuery: string;
-//   category?: string;
-// }
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface NotesClientProps {
   tag: string;
@@ -28,10 +21,6 @@ interface NotesClientProps {
 export default function NotesClient({ tag }: NotesClientProps) {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
 
   const selectedTag = !tag || tag === "all" ? undefined : tag;
 
@@ -39,7 +28,7 @@ export default function NotesClient({ tag }: NotesClientProps) {
     queryKey: ["notes", page, query, selectedTag],
     queryFn: () => fetchNotes(page, query, selectedTag),
     placeholderData: keepPreviousData,
-    refetchOnMount: false,
+    // refetchOnMount: false,
   });
 
   const notes = data?.notes || [];
@@ -47,9 +36,16 @@ export default function NotesClient({ tag }: NotesClientProps) {
   console.log(selectedTag);
   const totalPages = data?.totalPages || 0;
 
+  const router = useRouter();
+
   const handleSearch = (newQuery: string) => {
     setQuery(newQuery);
     setPage(1);
+    if (newQuery) {
+      router.push(`?query=${newQuery}`);
+    } else {
+      router.push(window.location.pathname);
+    }
   };
 
   const debouncedSetQuery = useDebouncedCallback(handleSearch, 500);
@@ -77,15 +73,10 @@ export default function NotesClient({ tag }: NotesClientProps) {
             onPageChange={setPage}
           />
         )}
-        <button className={css.createButton} onClick={handleOpenModal}>
-          Create note +
-        </button>
+        <Link href="/notes/action/create">
+          <button className={css.createButton}>Create note +</button>
+        </Link>
       </div>
-      {isModalOpen && (
-        <Modal onClose={handleCloseModal}>
-          <NoteForm onClose={handleCloseModal} />
-        </Modal>
-      )}
       {notes.length > 0 && <NoteList notes={notes} />}
       {notes.length === 0 && <p>No notes found.</p>}
     </div>

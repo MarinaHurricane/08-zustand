@@ -5,9 +5,37 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import NoteDetailsClient from "./NoteDetails.client";
+import { Metadata } from "next";
 
 interface NoteDetailsProps {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: NoteDetailsProps): Promise<Metadata> {
+  const { id } = await params;
+
+  const note = await fetchNoteById(id);
+
+  return {
+    title: `details of ${note.title} note`,
+    description: `${note.content}`,
+    openGraph: {
+      url: "https://vercel.com/marynas-projects-3f5c6324/08-zustand",
+      title: "Notes App",
+      description: "App for creating and managing notes",
+      siteName: "Notes App",
+      images: [
+        {
+          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+          width: 600,
+          height: 300,
+          alt: "Notes App preview image",
+        },
+      ],
+    },
+  };
 }
 
 export default async function NoteDetails({ params }: NoteDetailsProps) {
