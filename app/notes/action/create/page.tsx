@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function createNote() {
+export default function CreateNote() {
   return (
     <main className={css.main}>
       <div className={css.container}>
