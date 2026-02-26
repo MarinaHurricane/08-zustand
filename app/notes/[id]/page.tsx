@@ -22,9 +22,9 @@ export async function generateMetadata({
     title: `details of ${note.title} note`,
     description: `${note.content}`,
     openGraph: {
-      url: "https://vercel.com/marynas-projects-3f5c6324/08-zustand",
-      title: "Notes App",
-      description: "App for creating and managing notes",
+      url: `https://08-zustand-kf5mmf8bz-marynas-projects-3f5c6324.vercel.app/notes/action/create`,
+      title: `details of ${note.title} note`,
+      description: `${note.content}`,
       siteName: "Notes App",
       images: [
         {
