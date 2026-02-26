@@ -1,6 +1,5 @@
-"use client";
-
 import type { Metadata } from "next";
+import css from "./not-found.module.css";
 
 export const metadata: Metadata = {
   title: "404 - Page Not Found | Notes App",
@@ -20,8 +19,6 @@ export const metadata: Metadata = {
     ],
   },
 };
-
-import css from "./not-found.module.css";
 
 export default function NotFound() {
   return (

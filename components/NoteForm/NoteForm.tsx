@@ -32,17 +32,17 @@ export default function NoteForm() {
 
   const handleCancel = () => router.push("/notes/filter/all");
 
- const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  const formData = new FormData(e.currentTarget);
+    const formData = new FormData(e.currentTarget);
 
-  const title = (formData.get("title") as string)?.trim();
-  const content = (formData.get("content") as string) || "";
-  const tag = formData.get("tag") as string;
+    const title = (formData.get("title") as string)?.trim();
+    const content = (formData.get("content") as string) || "";
+    const tag = formData.get("tag") as string;
 
-  mutate({ title, content, tag });
-};
+    mutate({ title, content, tag });
+  };
   return (
     <form className={css.form} onSubmit={handleSubmit}>
       <div className={css.formGroup}>
